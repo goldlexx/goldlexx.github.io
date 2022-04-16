@@ -254,7 +254,9 @@
   }
 }
 
+@media (max-width: 768px) {
 .list_type_how {
   width: 636px;
   height: 535px;
+}
 }
