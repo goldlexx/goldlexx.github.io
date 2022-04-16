@@ -1,5 +1,5 @@
 .page {
-  font-family: 'Cormorant Garamond';
+  font-family: "Cormorant Garamond";
 }
 
 .page__menu {
@@ -8,8 +8,8 @@
 
 .list {
   list-style: none;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
 .centered-block {
@@ -17,16 +17,16 @@
 }
 
 .header {
-  height: 95px;
   display: flex;
+  height: 95px;
+  min-width: 1280px;
   max-width: 1330px;
-	min-width: 1280px;
 }
 
 .header__link {
   font-size: 28px;
   text-decoration: none;
-  color: #10191E;
+  color: #10191e;
 }
 
 .header__link::after {
@@ -34,39 +34,39 @@
 }
 
 .header__link[lang="ru"]::before {
-  content: 'Привет, меня зовут ';
+  content: "Привет, меня зовут ";
 }
 
 .header__link[lang="en"]::before {
-  content: 'Hello, my name is ';
+  content: "Hello, my name is ";
 }
 
 .header__link[lang="fr"]::before {
-  content: 'Bonjour, je suis ';
+  content: "Bonjour, je suis ";
 }
 
 .menu {
   display: flex;
-  justify-content: center;
-  min-height: 75px;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto;
+  min-width: 1280px;
+  min-height: 75px;
   max-width: 1330px;
-	min-width: 1280px;
-	margin: 40px auto;
 }
 
 .menu__link {
+  margin-right: 20px;
   font-size: 18px;
   text-decoration: none;
-  color: #10191E;
-  margin-right: 20px;
+  color: #10191e;
   transition: 0.7s linear;
 }
 
-.menu__link:hover { 
-  opacity: 0.6;
+.menu__link:hover {
   color: black;
+  opacity: 0.6;
 }
 
 .menu__link:last-of-type {
@@ -78,20 +78,20 @@
 }
 
 .content {
-	max-width: 1330px;
-	min-width: 1280px;
+  min-width: 1280px;
+  max-width: 1330px;
 }
 
 .content__title {
-  font-size: 34px;
   margin: 0 0 40px;
+  font-size: 34px;
   text-align: center;
 }
 
 .flex-row {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .flex-row_reversed {
@@ -157,34 +157,34 @@
 }
 
 .project_name_how-to-study {
-  background-image: url(./images/how-to-study.png);
   order: 3;
+  background-image: url(./images/how-to-study.png);
 }
 
 .project_name_across-russia {
-  background-image: url(./images/across-russia.png);
   order: 2;
+  background-image: url(./images/across-russia.png);
 }
 
 .project_name_mesto {
-  background-image: url(./images/mesto.png);
   order: 1;
+  background-image: url(./images/mesto.png);
 }
 
 .project__overlay {
-  background-color: rgba(0, 0, 100, .8);
-  height: 100%;
-  width: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  text-decoration: none;
-  color: white;
-  text-transform: uppercase;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
   font-size: 30px;
   text-align: center;
-  box-sizing: border-box;
-  padding: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: white;
+  background-color: rgb(0 0 100 / 80%);
   opacity: 0;
   transition: 0.5s linear;
 }
@@ -200,23 +200,61 @@
 }
 
 .footer {
-  height: 95px;
-	display: flex;
+  display: flex;
   justify-content: center;
+  height: 95px;
+  min-width: 1280px;
   max-width: 1330px;
-	min-width: 1280px;
 }
 
 .footer__logo {
+  align-self: center;
   width: 145px;
   height: 25px;
   background-image: url(https://pictures.s3.yandex.net/logo_black.png);
+  background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
-  align-self: center;
 }
 
+@media (max-width: 768px) {
+  .list_type_small {
+    display: grid;
+    justify-content: center;
+    grid-row-gap: 30px;
+  }
+}
 
+@media (max-width: 768px) {
+  .list_type_midle {
+    display: grid;
+    justify-content: center;
+    grid-row-gap: 30px;
+  }
+}
 
+@media (max-width: 768px) {
+  .list_type_footer {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    grid-row-gap: 30px;
+  }
+}
 
+@media (max-width: 768px) {
+  .project_width_l {
+    width: 636px;
+  }
+}
+
+@media (max-width: 768px) {
+  .project_name_how-to-study {
+    order: 1;
+  }
+}
+
+.list_type_how {
+  width: 636px;
+  height: 535px;
+}
