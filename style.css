@@ -19,7 +19,8 @@
 .header {
   display: flex;
   height: 95px;
-  min-width: 1280px;
+
+  /* min-width: 1280px; */
   max-width: 1330px;
 }
 
@@ -51,7 +52,8 @@
   align-items: center;
   justify-content: center;
   margin: 40px auto;
-  min-width: 1280px;
+
+  /* min-width: 1280px; */
   min-height: 75px;
   max-width: 1330px;
 }
@@ -78,7 +80,7 @@
 }
 
 .content {
-  min-width: 1280px;
+  /* min-width: 1280px; */
   max-width: 1330px;
 }
 
@@ -203,7 +205,8 @@
   display: flex;
   justify-content: center;
   height: 95px;
-  min-width: 1280px;
+
+  /* min-width: 1280px; */
   max-width: 1330px;
 }
 
@@ -217,7 +220,7 @@
   background-repeat: no-repeat;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .list_type_small {
     display: grid;
     justify-content: center;
@@ -225,7 +228,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .list_type_midle {
     display: grid;
     justify-content: center;
@@ -233,7 +236,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .list_type_footer {
     display: grid;
     justify-content: center;
@@ -242,19 +245,19 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .project_width_l {
     width: 636px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
   .project_name_how-to-study {
     order: 1;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1300px) {
 .list_type_how {
   width: 636px;
   height: 535px;
