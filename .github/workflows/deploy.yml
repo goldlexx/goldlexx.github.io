@@ -29,7 +29,7 @@ jobs:
 
       - run: npm ci
 
-      # Публичная версия: CONTENT_PREVIEW_MODE = false в src/data/preview.js.
+      # Режим сайта задаёт CONTENT_PREVIEW_MODE в src/data/preview.js (true — демонстрационный, false — публичный).
       # VITE_SITE_URL даёт абсолютные canonical, og:url, og:image и sitemap.xml.
       - run: npm run build
         env:
