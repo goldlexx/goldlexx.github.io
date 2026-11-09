@@ -1,10 +1,10 @@
-import { SITE, CONTACTS, TG } from '../data/site.js'
+import { SITE, CONTACTS, TG_CHANNEL } from '../data/site.js'
 import { BRANCH_BY } from '../data/branches.js'
 
 export const abs = (p) => (SITE.url ? SITE.url.replace(/\/$/, '') + p : p)
 
 function jsonLd(r) {
-  const org = { '@type': 'Organization', name: 'PRIDE ONE', description: 'Школа брейкинга', telephone: CONTACTS.tel, sameAs: [CONTACTS.vk, CONTACTS.ig, TG] }
+  const org = { '@type': 'Organization', name: 'PRIDE ONE', description: 'Школа брейкинга', telephone: CONTACTS.tel, sameAs: [CONTACTS.vk, CONTACTS.ig, TG_CHANNEL].filter(Boolean) }
   if (SITE.url) { org.url = SITE.url; org.logo = abs('/logo/paw-orange.png') }
   const graph = [org]
   const b = r.slug && BRANCH_BY[r.slug]

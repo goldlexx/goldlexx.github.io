@@ -11,3 +11,12 @@ export const CONTENT_PREVIEW_MODE = true
 export const isVisible = (item) => !item.hidden && (item.status === 'confirmed' || CONTENT_PREVIEW_MODE)
 export const isSlot = (item) => item.status === 'slot'
 export const onlyVisible = (list) => list.filter(isVisible)
+
+// Список раздела для показа на сайте: настоящие записи (confirmed, без hidden). Примеры заполнения (slot) появляются
+// только в демо-режиме и только пока в разделе нет ни одной настоящей записи — примеры никогда не стоят рядом с реальными.
+export const published = (list) => {
+  const live = list.filter((x) => !x.hidden)
+  const real = live.filter((x) => x.status === 'confirmed')
+  if (real.length || !CONTENT_PREVIEW_MODE) return real
+  return live.filter(isSlot)
+}

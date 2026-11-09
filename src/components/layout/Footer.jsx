@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useRouter } from '../../lib/router.jsx'
 import { Icon } from '../ui/Icon.jsx'
 import { Logo } from './Header.jsx'
-import { TG, CONTACTS as C, NAV } from '../../data/site.js'
+import { ENROLL_TG, CONTACTS as C, NAV } from '../../data/site.js'
 import { BRANCHES } from '../../data/branches.js'
 
 // Контакты — короткие названия площадок вместо технических адресов. Сами ссылки берутся из site.js.
+// Площадка без ссылки (soon) выводится той же плашкой, но неактивной, с подписью «— скоро».
 const LINKS = [
   { href: `tel:${C.tel}`, icon: 'phone', label: 'Позвонить' },
-  { href: TG, icon: 'send', label: 'Telegram', ext: true },
+  { href: ENROLL_TG, icon: 'send', label: 'Telegram', ext: true },
   { href: C.vk, icon: 'vk', label: 'ВКонтакте', ext: true },
-  { href: C.ig, icon: 'ig', label: 'Instagram', ext: true },
+  C.ig ? { href: C.ig, icon: 'ig', label: 'Instagram', ext: true } : { icon: 'ig', label: 'Instagram — скоро', soon: true },
 ]
 
 // «Наши филиалы на карте»: список раскрывается вниз, сразу под кнопкой, в обычном потоке (подвал становится выше,
@@ -66,7 +67,9 @@ export default function Footer() {
       <Logo />
       <ul className="ftr-links" aria-label="Контакты">
         {LINKS.map((l) => (
-          <li key={l.label}><a href={l.href} {...(l.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><Icon n={l.icon} size={18} />{l.label}</a></li>
+          <li key={l.label}>{l.soon
+            ? <span className="soon" aria-disabled="true"><Icon n={l.icon} size={18} />{l.label}</span>
+            : <a href={l.href} {...(l.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}><Icon n={l.icon} size={18} />{l.label}</a>}</li>
         ))}
       </ul>
       <nav className="ftr-nav" aria-label="Навигация в подвале">

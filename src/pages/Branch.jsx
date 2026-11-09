@@ -7,19 +7,20 @@ import Gallery from '../components/gallery/Gallery.jsx'
 import TrainerCards from '../components/blocks/TrainerCards.jsx'
 import Reviews from '../components/blocks/Reviews.jsx'
 import { BRANCHES, BRANCH_BY } from '../data/branches.js'
-import { COACHES } from '../data/coaches.js'
+import { COACHES_V } from '../data/visible.js'
 import { fmtTimes } from '../lib/schedule.js'
 import { MediaSlot, NeedNote } from '../components/ui/PreviewNote.jsx'
-import { CONTENT_PREVIEW_MODE, onlyVisible } from '../data/preview.js'
+import { CONTENT_PREVIEW_MODE, published } from '../data/preview.js'
 
 // Общий шаблон страницы филиала: показываются только заполненные и подтверждённые данные.
 export default function Branch({ slug }) {
   const b = BRANCH_BY[slug]
   const i = BRANCHES.indexOf(b), n = BRANCHES.length
   const prev = BRANCHES[(i - 1 + n) % n], next = BRANCHES[(i + 1) % n]
-  // Тренеры и отзывы филиала проходят те же правила видимости, что и на остальных страницах (slot — только демо, hidden — никогда)
-  const trainers = onlyVisible(COACHES.filter((c) => b.trainers.includes(c.slug)))
-  const reviews = onlyVisible(b.reviews)
+  // Тренеры филиала — из общего списка COACHES_V по полю branches у тренера (единственный источник связи «тренер — филиал»).
+  // Отзывы филиала проходят те же правила видимости, что и на остальных страницах (slot — только демо, hidden — никогда).
+  const trainers = COACHES_V.filter((c) => c.branches?.includes(b.slug))
+  const reviews = published(b.reviews)
   const photos = b.photos.filter((p) => !p.hidden)
   return (
     <>

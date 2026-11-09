@@ -23,6 +23,21 @@ const topOf = (el) => el.getBoundingClientRect().top + window.scrollY - headerH(
 const ANCHOR_GAP = 16
 // Фокус на цель якоря: клавиатура и скринридер продолжают с неё, а не с прежнего места страницы
 const focusAnchor = (el) => { if (!el.matches('a,button,input,select,textarea,[tabindex]')) el.setAttribute('tabindex', '-1'); el.focus({ preventScroll: true }) }
+// Переход к якорю — одинаково при прямом открытии ссылки с #hash и при переходе внутри сайта: мгновенно, с зазором, с фокусом.
+// Нативная прокрутка браузера к якорю (загрузка, ручной ввод #hash) приходит в ту же точку: scroll-padding-top в base.css
+// равен высоте шапки плюс тот же зазор, поэтому второй прокрутки «на 16 px» не бывает.
+const toAnchor = (el) => { jump(topOf(el) - ANCHOR_GAP); focusAnchor(el) }
+// Прямое открытие: пока догружаются шрифты и картинки, вёрстка выше якоря может сдвинуться. Выравниваем ещё раз по их загрузке,
+// но только если посетитель сам ещё не прокручивал страницу.
+const settleAnchor = (el) => {
+  let off = false
+  const stop = () => { off = true }
+  const opts = { once: true, passive: true }
+  ;['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach((t) => window.addEventListener(t, stop, opts))
+  const again = () => { if (!off && el.isConnected) jump(topOf(el) - ANCHOR_GAP) }
+  if (document.readyState !== 'complete') window.addEventListener('load', again, { once: true })
+  document.fonts?.ready.then(again)
+}
 
 // Точка перехода на другую страницу: начало <main>, сразу под фиксированной шапкой.
 // Шапка страницы (H1, хлебные крошки, адрес филиала, неделя занятий) видна целиком; плашка демо-режима над шапкой
@@ -52,7 +67,10 @@ export function RouterProvider({ url, children }) {
     cur.current = entryKey()
     const y0 = ssGet(cur.current) ?? window.history.state?.y
     if (typeof y0 === 'number' && y0 > 0) jump(y0) // перезагрузка или возврат с другого сайта
-    else if (window.location.hash) document.getElementById(window.location.hash.slice(1))?.scrollIntoView()
+    else if (window.location.hash) {
+      const anchor = document.getElementById(window.location.hash.slice(1))
+      if (anchor) { toAnchor(anchor); settleAnchor(anchor) }
+    }
     const onPop = () => {
       if (cur.current) positions.set(cur.current, window.scrollY)
       const k = entryKey()
@@ -78,7 +96,7 @@ export function RouterProvider({ url, children }) {
     intent.current = null
     if (it.y !== undefined) { jump(it.y); return }
     const anchor = it.hash && document.getElementById(it.hash)
-    if (anchor) { jump(topOf(anchor) - ANCHOR_GAP); focusAnchor(anchor); return }
+    if (anchor) { toAnchor(anchor); return }
     if (it.keep) return
     jump(pageTop())
     document.getElementById('main')?.focus({ preventScroll: true })

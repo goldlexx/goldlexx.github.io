@@ -9,7 +9,7 @@
 @font-face{font-family:'Oswald';font-style:normal;font-weight:500 700;font-display:swap;src:url(/fonts/oswald-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
 @font-face{font-family:'Oswald';font-style:normal;font-weight:500 700;font-display:swap;src:url(/fonts/oswald-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 :root{--bg:#0b0b0c;--p:#151517;--p2:#1c1c1f;--line:rgba(255,255,255,.1);--o:#ff9b23;--o2:#ffb04d;--t:#f4f4f2;--m:#a9a9ad;--hf:'Oswald','Arial Narrow',Impact,sans-serif;--bf:'Inter',system-ui,Arial,sans-serif;--hh:72px}
-*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:var(--hh)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth;scroll-padding-top:calc(var(--hh) + 1px + 16px)}/* шапка + её нижняя граница + зазор ANCHOR_GAP из router.jsx: нативная прокрутка к якорю совпадает с маршрутизатором */
 body{background:var(--bg);color:var(--t);font:400 16px/1.55 var(--bf);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}ul{list-style:none;padding:0}a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--o);outline-offset:3px}
@@ -75,8 +75,10 @@ dl>div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border
 .ftr-in>.logo{grid-area:logo;justify-self:start}
 .ftr-links{grid-area:links;display:flex;border:1px solid var(--line);border-radius:14px;overflow:hidden}
 .ftr-links li+li{border-left:1px solid var(--line)}
-.ftr-links a{display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 20px;font-weight:500;font-size:15px;transition:background .2s,color .2s}
+.ftr-links a,.ftr-links .soon{display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 20px;font-weight:500;font-size:15px;transition:background .2s,color .2s}
 .ftr-links a:hover{background:var(--p);color:var(--o)}.ftr-links svg{color:var(--o);flex:none}
+/* Площадка без ссылки (например, «Instagram — скоро»): та же плашка, приглушённая и некликабельная */
+.ftr-links .soon{color:var(--m);cursor:default}.ftr-links .soon svg{color:var(--m)}
 .ftr-nav{grid-area:nav;display:flex;flex-wrap:wrap;gap:10px 22px;font-size:14.5px;color:#c4c4c8}.ftr-nav a:hover{color:var(--o)}
 .ftr-bar{grid-area:bar;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding-top:20px;border-top:1px solid var(--line)}
 .copy{order:1}.ftr-map{order:2}.ftr-map-list{order:3;flex-basis:100%}
@@ -95,7 +97,7 @@ dl>div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border
 @media(max-width:760px){.ftr{padding-block:28px 20px}
 .ftr-in{grid-template-columns:minmax(0,1fr);grid-template-areas:"logo" "links" "nav" "bar";gap:22px}
 .ftr-links{display:grid;grid-template-columns:1fr 1fr}.ftr-links li+li{border-left:0}.ftr-links li:nth-child(2n){border-left:1px solid var(--line)}.ftr-links li:nth-child(n+3){border-top:1px solid var(--line)}
-.ftr-links a{justify-content:flex-start;padding:0 16px}
+.ftr-links a,.ftr-links .soon{justify-content:flex-start;padding:0 16px}
 .ftr-nav{gap:10px 22px;justify-content:center}
 .ftr-bar{flex-direction:column;align-items:stretch;gap:14px;padding-top:0;border-top:0}.ftr-map{order:1}.ftr-map-list{order:2}.copy{order:3;margin-top:4px}.ftr-map-btn{width:100%;justify-content:center}.ftr-map-list ul{grid-template-columns:1fr 1fr}
 .copy{padding-top:16px;border-top:1px solid var(--line)}}

@@ -12,9 +12,10 @@ import Prices from './pages/Prices.jsx'
 import Club from './pages/Club.jsx'
 import Apply from './pages/Apply.jsx'
 import Trainers from './pages/Trainers.jsx'
+import ReviewsPage from './pages/ReviewsPage.jsx'
 import NotFound from './pages/NotFound.jsx'
 
-const PAGES = { home: Home, about: About, branches: Branches, branch: Branch, schedule: Schedule, prices: Prices, club: Club, apply: Apply, trainers: Trainers, notfound: NotFound }
+const PAGES = { home: Home, about: About, branches: Branches, branch: Branch, schedule: Schedule, prices: Prices, club: Club, apply: Apply, trainers: Trainers, reviews: ReviewsPage, notfound: NotFound }
 
 function Page() {
   const { path } = useRouter()

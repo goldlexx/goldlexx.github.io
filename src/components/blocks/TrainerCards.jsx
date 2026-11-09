@@ -23,7 +23,8 @@ function Photo({ c, tpl }) {
 // Компактная карточка (главная) ведёт к полной карточке того же тренера на странице «Тренеры»: там рассказ и факты.
 export default function TrainerCards({ items, compact = false }) {
   return (
-    <div className={`tcards ${compact ? 'tcards-c' : ''}`}>{items.map((c) => {
+    // Компактная сетка (главная): 4 колонки при четырёх карточках, иначе 3 — одна-две карточки не растягиваются на всю ширину
+    <div className={`tcards ${compact ? 'tcards-c' : ''}`} style={compact ? { '--cols': items.length >= 4 ? 4 : 3 } : undefined}>{items.map((c) => {
       const tpl = isSlot(c)
       const branches = (c.branches || []).map((s) => BRANCH_BY[s]).filter(Boolean)
       // Филиалы — ссылками на страницы филиалов; неизвестный slug пропускается

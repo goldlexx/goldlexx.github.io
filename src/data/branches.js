@@ -1,7 +1,8 @@
 // Филиалы — единый источник адресов и расписания для всех страниц.
 // Необязательные поля (пустые не показываются на сайте):
-//   trainers: ['slug-тренера'], photos: [фото зала: { src: '/img/...', alt: '...' } или как в gallery.js],
+//   photos: [фото зала: { src: '/img/...', alt: '...' } или как в gallery.js],
 //   description: 'пара предложений о месте', howToGet: 'как дойти', reviews: [как в reviews.js]
+// Тренеры филиала здесь не перечисляются: связь задаётся у тренера, поле branches в coaches.js (единственный источник).
 // Добавить филиал = добавить запись сюда: страница, карточка и sitemap появятся автоматически.
 const RAW = [
   { slug: 'pyhtino', name: 'Пыхтино', address: 'ул. Лётчика Ульянина, 5', schedule: [['Понедельник','17:00, 18:00, 19:00'],['Среда','17:00, 18:00, 19:00'],['Пятница','17:00, 18:00, 19:00']] },
@@ -15,7 +16,7 @@ const RAW = [
 
 const mapUrl = (q) => `https://yandex.ru/maps/?text=${encodeURIComponent(q)}`
 export const BRANCHES = RAW.map((b) => ({
-  city: 'Москва', trainers: [], photos: [], description: null, howToGet: null, reviews: [], ...b,
+  city: 'Москва', photos: [], description: null, howToGet: null, reviews: [], ...b,
   mapUrl: mapUrl(b.mapQuery || `${b.city || 'Москва'}, ${b.address}`),
 }))
 export const BRANCH_BY = Object.fromEntries(BRANCHES.map((b) => [b.slug, b]))

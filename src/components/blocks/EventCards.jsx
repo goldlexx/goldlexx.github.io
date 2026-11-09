@@ -9,9 +9,10 @@ const CAT = Object.fromEntries(EVENT_CATEGORIES)
 function Cover({ e, tpl }) {
   const c = e.cover
   const alt = tpl ? '' : (c.alt || e.title)
+  const style = c.width && c.height ? { '--ar': c.width / c.height } : undefined
   return c.base
-    ? <img className="ecover" src={srcOf(c.base, c.w)} srcSet={srcSetOf(c.base, c.w)} sizes="(max-width:860px) 100vw, 480px" width={c.width} height={c.height} alt={alt} loading="lazy" />
-    : <img className="ecover" src={thumbOf(c)} width={c.width} height={c.height} alt={alt} loading="lazy" />
+    ? <img className="ecover" src={srcOf(c.base, c.w)} srcSet={srcSetOf(c.base, c.w)} sizes="(max-width:860px) 100vw, 480px" width={c.width} height={c.height} style={style} alt={alt} loading="lazy" />
+    : <img className="ecover" src={thumbOf(c)} width={c.width} height={c.height} style={style} alt={alt} loading="lazy" />
 }
 
 // Карточка события: обложка, категория и дата, название, описание, участие и результат, «Подробнее» при наличии ссылки.

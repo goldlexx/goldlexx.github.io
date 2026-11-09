@@ -3,19 +3,24 @@ import Lightbox from './Lightbox.jsx'
 import { thumbOf, srcSetOf, keyOf } from '../../data/gallery.js'
 import { CONTENT_PREVIEW_MODE } from '../../data/preview.js'
 import { Icon } from '../ui/Icon.jsx'
+import { ShowMore, useBatch } from '../ui/ShowMore.jsx'
 
 const SLOT_AR = [4 / 3, 3 / 4, 1]
 
 // Сетка по пропорциям фото (без обрезки) + просмотр.
-// slots — сколько пустых мест под новые фото добавить в конце (только в демо-режиме).
-export default function Gallery({ items, slots = 0 }) {
+// batch — показывать порциями (сначала batch фото, «Показать ещё» добавляет следующие); 0 — все сразу.
+// Просмотр листает весь список, а не только показанную часть: в DOM всегда одно большое фото.
+// slots — сколько пустых мест под новые фото добавить в конце (только в демо-режиме, когда показаны все фото).
+export default function Gallery({ items, slots = 0, batch = 0 }) {
   const [idx, setIdx] = useState(null)
   const opener = useRef(null)
-  const empty = CONTENT_PREVIEW_MODE ? slots : 0
+  const { shown, next } = useBatch(items.length, batch || items.length)
+  const visible = batch ? items.slice(0, shown) : items
+  const empty = CONTENT_PREVIEW_MODE && visible.length === items.length ? slots : 0
   return (
     <>
       <div className="gal">
-        {items.map((g, i) => {
+        {visible.map((g, i) => {
           const ar = g.width && g.height ? g.width / g.height : 4 / 3
           const fit = (e) => { if (!g.width) e.currentTarget.closest('figure').style.setProperty('--ar', e.currentTarget.naturalWidth / e.currentTarget.naturalHeight) }
           return (
@@ -32,6 +37,7 @@ export default function Gallery({ items, slots = 0 }) {
           </figure>
         ))}
       </div>
+      {batch > 0 && <ShowMore shown={shown} total={items.length} onMore={next} />}
       {idx !== null && <Lightbox items={items} index={idx} onIndex={setIdx} onClose={() => { setIdx(null); requestAnimationFrame(() => opener.current?.focus()) }} />}
     </>
   )

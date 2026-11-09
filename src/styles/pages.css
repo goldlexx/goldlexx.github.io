@@ -167,7 +167,7 @@ main:focus{outline:none}
 
 /* Тренеры */
 .tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
-.tcards-c{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.tcards-c{grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
 .tcards-c .tcard{position:relative;transition:border-color .2s}.tcards-c .tcard:hover,.tcards-c .tcard:focus-within{border-color:rgba(255,155,35,.6)}
 .tcards-c h3 a:after{content:'';position:absolute;inset:0;border-radius:inherit}.tcards-c h3 a:focus-visible{outline:none}.tcards-c .tcard:has(a:focus-visible){outline:2px solid var(--o);outline-offset:3px}
 .tcard{display:flex;flex-direction:column;overflow:hidden;border-radius:18px;background:var(--p);border:1px solid var(--line)}
@@ -255,7 +255,9 @@ main:focus{outline:none}
 .rev-out{justify-self:start;max-width:100%;white-space:normal;text-align:left}
 .bp-slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:start}
 .bcard.has-cover{padding-top:0;overflow:hidden}.bcard-cover{width:calc(100% + 44px);margin:0 -22px;aspect-ratio:16/9;object-fit:cover}
-.ecover{display:block;width:100%;height:auto;border-radius:14px} /* обложка события целиком, без кадрирования 16:10 */
+/* Обложка события целиком, без кадрирования. Ширина — из пропорции файла (--ar) и предела высоты: вертикальная обложка
+   не выше 560 px и 75% экрана, горизонтальная — во всю ширину; место под обложку известно до загрузки */
+.ecover{display:block;width:min(100%,calc(min(560px,75vh) * var(--ar,100)));height:auto;max-height:min(560px,75vh);object-fit:contain;margin-inline:auto;border-radius:14px}
 .ecard.is-tpl .ecover{opacity:.55}
 .hist{display:grid}.hist li{display:grid;grid-template-columns:90px 1fr;gap:16px;padding:14px 0;border-top:1px solid var(--line)}.hist li:first-child{border-top:0}
 .hist b{font:700 22px var(--hf);color:var(--o)}
@@ -321,3 +323,6 @@ main:focus{outline:none}
    ширины самой длинной надписи, поэтому ширины всегда равны). Только для Hero: общее правило .row .btn не меняется */
 .hero .row .btn{flex:1 1 240px;justify-content:center}.hero-art{height:min(60vw,300px);margin-bottom:24px}
 .pbanner{padding:8px 16px;font-size:12.5px;line-height:1.4}}
+/* Постепенная загрузка («Показать ещё») и группы событий */
+.more-row{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:28px}.more-row .count{margin:0}
+.ev-group{margin:0 0 14px;font-size:20px;color:var(--o)}.events+.ev-group{margin-top:32px}
